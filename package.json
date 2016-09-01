@@ -37,7 +37,8 @@
   "scripts": {
     "build": "webpack -d --watch",
     "lint": "eslint app",
-    "server": "node server/index.js"
+    "server": "node server/index.js",
+    "postinstall": "webpack"
   },
   "author": "",
   "license": "ISC",

@@ -1,11 +1,8 @@
-const http = require('http');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 2500;
 
-app.get('/', (req, res) => {
-    res.send('Hello world.');
-});
+app.use(express.static('.'));
 
 app.listen(port, () => {
   console.log('Listening on port ' + port);
