@@ -1,0 +1,10 @@
+{
+  "name" : "Name",
+  "email" : "E-mail address",
+  "address" : "Address",
+  "zip" : "Zip code",
+  "country" : "Country",
+  "birthdate" : "Birth date",
+  "changelanguage" : "Dansk",
+  "signup" : "Sign up"
+}

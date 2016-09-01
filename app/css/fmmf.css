@@ -1,0 +1,93 @@
+body {
+    background-color: black;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: 1650px;
+}
+
+@media only screen and (max-width: 1599px) and (min-width: 801px) {
+  body {
+    background-image: url('../images/background_1200.jpg');
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  body {
+    background-image: url('../images/background_1600.jpg');
+  }
+}
+
+@media only handheld and (max-width: 800px) {
+  body {
+    background-image: url('../images/background_800.jpg');
+  }
+}
+
+.control-label {
+    color: white;
+}
+
+.container {
+  max-width: 1300px;
+}
+
+@font-face {
+  font-family: 'FetteTrumpDeutsch';
+  src: url('../FetteTrumpDeutsch.ttf');
+}
+
+.menu-text {
+  font-family: 'FetteTrumpDeutsch';
+  font-size: 41pt;
+  color: white;
+}
+
+.menu-text:hover, .menu-text:focus, .active {
+  color: #bababa;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.content {
+  background-color: #5a5a5a;
+  opacity: 0.75;
+  color: white;
+  width: 1200px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+}
+
+.fmmf-menu {
+  margin-top: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fmmf-menu ul {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+
+.fmmf-menu li {
+  text-align: center;
+}
+
+.languages {
+  float: right;
+}
+
+h1.headline {
+  font-family: 'FetteTrumpDeutsch';
+}
+
+a {
+  color: #eeeeee;
+}
+
+a:hover {
+  color: #cccccc;
+}

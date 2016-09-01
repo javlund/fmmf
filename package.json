@@ -1,0 +1,50 @@
+{
+  "name": "fmmf",
+  "version": "1.0.0",
+  "description": "Frinds of Metal Magic Festival",
+  "main": "index.js",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.9.0",
+    "babel-eslint": "^6.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "bootstrap": "^3.3.6",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.13.1",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-react": "^5.2.2",
+    "file-loader": "^0.8.5",
+    "fixed-data-table": "^0.6.1",
+    "html-webpack-plugin": "^2.18.0",
+    "i18n-react": "^0.2.0",
+    "jquery": "^3.0.0",
+    "moment": "^2.14.1",
+    "react": "15.0.1",
+    "react-datepicker": "^0.28.0",
+    "react-dom": "15.0.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.5.2",
+    "redux": "^3.5.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.13.0",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "scripts": {
+    "build": "webpack -d --watch",
+    "lint": "eslint app",
+    "server": "node server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "engines": {
+    "node": "6.5.0"
+  }
+}

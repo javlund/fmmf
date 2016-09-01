@@ -1,0 +1,83 @@
+const path = require('path');
+const merge = require('webpack-merge');
+
+const localPath = 'http://fmmf:8080/build/';
+const remotePath = 'http://fmmf.dk/build/';
+
+const chosenPath = remotePath;
+
+const TARGET = process.env.npm_lifecycle_event;
+const PATHS = {
+  app: path.join(__dirname, 'app'),
+  node_modules: path.join(__dirname, 'node_modules')
+};
+
+const common = {
+  entry: {
+    app: PATHS.app
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  output: {
+    path: path.join(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: chosenPath
+  },
+  module: {
+    loaders: [
+      { 
+        test: /\.css$/,
+        loaders: ['style', 'css']
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        include: PATHS.app,
+        query: {
+          presets: ['es2015', 'react']
+        }
+      },
+      { 
+        test: /\.png$/, 
+        loader: 'url-loader?limit=100000',
+        include: PATHS.app
+      },
+      { 
+        test: /\.jpg$/, 
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'file'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=image/svg+xml'
+      },
+      {
+        test: /(\.jsx|\.js)$/,
+        loader: "eslint-loader",
+        exclude: /node_modules/
+      }
+    ]
+  }
+};
+
+if(TARGET === 'start' || !TARGET) {
+  module.exports = merge(common, {
+    devtool: 'eval-source-map'
+  });
+}
+
+if(TARGET === 'build') {
+  module.exports = merge(common, {});
+}

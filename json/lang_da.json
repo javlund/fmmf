@@ -1,0 +1,10 @@
+{
+  "name" : "Navn",
+  "email" : "Email-adresse",
+  "address" : "Adresse",
+  "zip" : "Postnummer",
+  "country" : "Land",
+  "birthdate" : "Fødselsdato",
+  "changelanguage" : "English",
+  "signup" : "Tilmeld"
+}

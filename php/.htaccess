@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule .* receive.php [L,QSA]
+
+php_value always_populate_raw_post_data -1
+
+AddType application/x-httpd-php-old .php
