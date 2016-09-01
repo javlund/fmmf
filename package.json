@@ -38,7 +38,7 @@
     "build": "webpack -d --watch",
     "lint": "eslint app",
     "server": "node server/index.js",
-    "postinstall": "webpack"
+    "postinstall": "node_modules/.bin/webpack"
   },
   "author": "",
   "license": "ISC",
