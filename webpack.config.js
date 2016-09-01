@@ -1,12 +1,14 @@
 const path = require('path');
 const merge = require('webpack-merge');
 
+const TARGET = process.env.npm_lifecycle_event;
+
 const localPath = 'http://fmmf:8080/build/';
 const remotePath = 'http://fmmf.dk/build/';
+const herokuPath = 'https://fmmf.herokuapp.com/build/';
 
-const chosenPath = remotePath;
+const chosenPath = TARGET === 'postinstall' ? herokuPath : remotePath;
 
-const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   app: path.join(__dirname, 'app'),
   node_modules: path.join(__dirname, 'node_modules')
