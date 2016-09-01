@@ -22,6 +22,7 @@
     "i18n-react": "^0.2.0",
     "jquery": "^3.0.0",
     "moment": "^2.14.1",
+    "pg": "^6.1.0",
     "react": "15.0.1",
     "react-datepicker": "^0.28.0",
     "react-dom": "15.0.1",
@@ -38,7 +39,7 @@
   "scripts": {
     "build": "webpack -d --watch",
     "lint": "eslint app",
-    "server": "node server/index.js",
+    "start": "node server/index.js",
     "postinstall": "node_modules/.bin/webpack"
   },
   "author": "",
