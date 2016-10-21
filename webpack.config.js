@@ -3,11 +3,11 @@ const merge = require('webpack-merge');
 
 const TARGET = process.env.npm_lifecycle_event;
 
-const localPath = 'http://fmmf:8080/build/';
+const localPath = 'http://localhost:2500/build/';
 const remotePath = 'http://fmmf.dk/build/';
 const herokuPath = 'https://fmmf.herokuapp.com/build/';
 
-const chosenPath = TARGET === 'postinstall' ? herokuPath : remotePath;
+const chosenPath = TARGET === 'postinstall' ? herokuPath : localPath;
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -40,13 +40,18 @@ const common = {
           presets: ['es2015', 'react']
         }
       },
+      {
+        test: /\.json$/,
+        loader: 'json-loader',
+        include: PATHS.app
+      },
       { 
         test: /\.png$/, 
         loader: 'url-loader?limit=100000',
         include: PATHS.app
       },
       { 
-        test: /\.jpg$/, 
+        test: /\.(jpg|gif)$/, 
         loader: 'file-loader'
       },
       {

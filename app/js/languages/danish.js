@@ -36,7 +36,16 @@ export default {
     country: 'Land',
     birthdate: 'Fødselsdato',
     button: 'Indmeld',
+    emailError: 'E-mail adressen er ikke korrekt format.',
     error: 'Noget gik galt - prøv igen.',
     success: 'Tak for din tilmelding! Vi vender tilbage hurtigst muligt.'
+  },
+  payment: {
+    headline: 'betaling',
+    text: 'Tak fordi du vil blive medlem! Medlemsskabet koster 200 kr. årligt og betales via Paypal. Tryk her for at komme videre til betalingen.',
+    paypal: 'Tilmeld med Paypal',
+    description: 'Medlemskab af Friends of Metal Magic Festival',
+    amount: '200',
+    currency: 'DKK'
   }
 };

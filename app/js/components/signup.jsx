@@ -1,26 +1,71 @@
 import React from 'react';
-import setLanguage from '../languages';
 import T from 'i18n-react';
-import $ from 'jquery';
+import 'whatwg-fetch';
 import DatePicker from 'react-datepicker';
+import Select from 'react-select';
 import moment from 'moment';
+import setLanguage from '../languages';
+import countries from '../data/countries.json';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-select/dist/react-select.css';
 
-let endDate = moment();
+const endDate = moment();
+
+function getCountryOptions(lang) {
+  const selector = `${lang}Name`;
+  return countries.map(country => {
+    const intName = country[selector];
+    const nativeName = country.nativeName;
+    const label = intName === nativeName ? intName : `${intName} (${nativeName})`;
+    const value = country.code;
+    return {
+      label,
+      value
+    };
+  });
+}
+
+function validateField(key, value) {
+  if(key === 'zip' && /[^\d]/.test(value)) {
+    return false;
+  }
+  return true;
+}
+
+function validateEmail(value) {
+  return /([\w\.]+)@([\w\.]+)\.(\w+)/g.test(value);
+}
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      fields: {
+        name: '',
+        email: '',
+        address: '',
+        city: '',
+        zip: '',
+        birthdate: moment(),
+        country: 'DK'
+      }
     };
+    this.changeValue = this.changeValue.bind(this);
+    this.changeCountry = this.changeCountry.bind(this);
+    this.changeDate = this.changeDate.bind(this);
+    this.validate = this.validate.bind(this);
+    this.checkEmail = this.checkEmail.bind(this);
   }
 
   render() {
-    setLanguage(this.props.lang);
-    let errorField = this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : <div />;
-    let messageField = this.state.message ? <div className="alert alert-success">{this.state.message}</div> : <div />;
+    const {lang} = this.props;
+    const {fields} = this.state;
+    setLanguage(lang);
+    const countryOptions = getCountryOptions(lang);
+    const selectPlaceholderText = lang === 'en' ? 'Select...' : 'Vælg...';
+    const errorField = this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : <div />;
+    const messageField = this.state.message ? <div className="alert alert-success">{this.state.message}</div> : <div />;
     return <form id="signupform" onSubmit={this.submit.bind(this)}>
       <div className="row form-horizontal">
         {errorField}
@@ -29,49 +74,49 @@ class Signup extends React.Component {
           <div className="form-group">
             <label htmlFor="name" className="col-md-3 control-label"><T.text text="signup.name" /></label>
             <div className="col-md-9">
-              <input id="name" name="name" ref="name" className="form-control" />
+              <input id="name" name="name" ref="name" className="form-control" value={fields.name} onChange={this.changeValue('name')} />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="email" className="col-md-3 control-label"><T.text text="signup.email" /></label>
             <div className="col-md-9">
-              <input id="email" name="email" ref="email" className="form-control" />
+              <input id="email" name="email" ref="email" className="form-control" value={fields.email} onChange={this.changeValue('email')} onBlur={this.checkEmail.bind(undefined, false)} />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="address" className="col-md-3 control-label"><T.text text="signup.address" /></label>
             <div className="col-md-9">
-              <input id="address" name="address" ref="address" className="form-control" />
+              <input id="address" name="address" ref="address" className="form-control" value={fields.address} onChange={this.changeValue('address')} />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="city" className="col-md-3 control-label"><T.text text="signup.city" /></label>
             <div className="col-md-9">
-              <input id="city" name="city" ref="city" className="form-control" />
+              <input id="city" name="city" ref="city" className="form-control" value={fields.city} onChange={this.changeValue('city')} />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="zip" className="col-md-3 control-label"><T.text text="signup.zip" /></label>
             <div className="col-md-9">
-              <input id="zip" name="zip" ref="zip" className="form-control" maxLength="5" />
+              <input id="zip" name="zip" ref="zip" className="form-control" value={fields.zip} onChange={this.changeValue('zip')} maxLength="5" />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="country" className="col-md-3 control-label"><T.text text="signup.country" /></label>
             <div className="col-md-9">
-              <input id="country" name="country" ref="country" className="form-control" />
+              <Select id="country" name="country" options={countryOptions} value={fields.country} onChange={this.changeCountry} ref="country" placeholder={selectPlaceholderText} />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="birthdate" className="col-md-3 control-label"><T.text text="signup.birthdate" /></label>
             <div className="col-md-9">
-              <DatePicker selected={this.state.startDate} onChange={this.changeDate.bind(this)} maxDate={endDate} dateFormat="DD/MM/YYYY" ref="birthdate" className="form-control" />
+              <DatePicker selected={fields.birthdate} onChange={this.changeDate} maxDate={endDate} dateFormat="DD/MM/YYYY" ref="birthdate" className="form-control" />
             </div>
           </div>
           <div className="form-group">
             <div className="col-md-3"></div>
             <div className="col-md-9">
-              <button id="signup" className="btn btn-default"><T.text text="signup.button" /></button>
+              <button id="signup" className="btn btn-default" disabled={this.validate()}><T.text text="signup.button" /></button>
             </div>
           </div>
         </div>
@@ -79,47 +124,87 @@ class Signup extends React.Component {
     </form>
   }
 
+  changeValue(key) {
+    return (event) => {
+      const value = event.target.value;
+      if(validateField(key, value)) {
+        const fields = this.state.fields;
+        this.setState({
+          fields: {...fields, [key]: event.target.value}
+        });        
+      }
+      if(key === 'email') {
+        this.checkEmail(true);
+      }
+    }
+  }
+
   getValueFromRef(ref) {
-    let input = this.refs[ref];
+    const input = this.refs[ref];
     return input.value;
   }
 
   clearForm() {
-    let keys = Object.keys(this.refs);
+    const keys = Object.keys(this.refs);
     keys.forEach(ref => {
       this.refs[ref].value = '';
     });
   }
 
-  changeDate(date) {
+  changeDate(birthdate) {
     this.setState({
-      startDate: date
+      fields: {...this.state.fields, birthdate}
     });
+  }
+
+  changeCountry(country) {
+    this.setState({
+      fields: {...this.state.fields, country}
+    });
+  }
+
+  checkEmail(isBlur) {
+    const {email} = this.state.fields;
+    const validated = validateEmail(email);
+    if(validated) {
+      this.setState({
+        error: ''
+      });
+      return;
+    }
+    if(!isBlur) {
+      this.setState({
+        error: T.translate('signup.emailError')
+      });
+    }
+
+  }
+
+  validate() {
+    const {fields} = this.state;
+    const problems = Object.keys(fields).filter(key => fields[key] === '');
+    return problems.length;
   }
 
   submit(event) {
     event.preventDefault();
-    let data = {
-      name: this.getValueFromRef('name'),
-      email: this.getValueFromRef('email'),
-      address: this.getValueFromRef('address'),
-      city: this.getValueFromRef('city'),
-      zip: this.getValueFromRef('zip'),
-      country: this.getValueFromRef('country'),
-      birthdate: this.state.startDate.valueOf(),
-      joindate: new Date().getTime()
-    };
-    $.ajax({
-      url: 'php/members/create',
-      data: data,
-      method: 'POST'
-    }).done(() => {
+    const {fields} = this.state;
+    fetch('/member', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(fields)
+    }).then(response => {
+      if(!response.ok) {
+        throw Error(response.statusText);
+      }
       this.clearForm();
       this.setState({
         error: undefined,
         message: T.translate('signup.success')
       })
-    }).fail(() => {
+    }).catch(() => {
       this.setState({
         error: T.translate('signup.error'),
         message: undefined

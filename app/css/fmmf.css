@@ -80,6 +80,11 @@ body {
   float: right;
 }
 
+.languages > a > img {
+  width: 64px;
+  height: 64px;
+}
+
 h1.headline {
   font-family: 'FetteTrumpDeutsch';
 }
@@ -90,4 +95,27 @@ a {
 
 a:hover {
   color: #cccccc;
+}
+
+.admin-table {
+  color: black;
+}
+
+.admin-table-header {
+  color: black;
+}
+
+.admin-link {
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+
+.admin-link img {
+  width: 32px;
+  height: 32px;
+}
+
+.left-space {
+  margin-left: 30px;
 }

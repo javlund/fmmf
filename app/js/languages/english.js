@@ -36,7 +36,16 @@ export default {
     country: 'Country',
     birthdate: 'Birth date',
     button: 'Join',
+    emailError: 'The e-mail address is not correctly formatted.',
     error: 'Something went wrong - please try again.',
     success: 'Thank you for your sign up! We will get back to you as soon as possible.'
+  },
+  payment: {
+    headline: 'payment',
+    text: 'Thank you for your support! The annual membership fee is €15 and is paid through Paypal. Click here to proceed to payment.',
+    paypal: 'Subscribe using Paypal',
+    description: 'Friends of Metal Magic Festival membership',
+    amount: '15',
+    currency: 'EUR'
   }
 };
