@@ -26,9 +26,12 @@ class Admin extends React.Component {
       moreInfo: false,
       member: {}
     };
-    this.props.getToken();
     this.seeMore = this.seeMore.bind(this);
     this.mailAllMembers = this.mailAllMembers.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getToken();
   }
 
   componentDidMount() {

@@ -44,8 +44,15 @@ export default {
     headline: 'payment',
     text: 'Thank you for your support! The annual membership fee is €15 and is paid through Paypal. Click here to proceed to payment.',
     paypal: 'Subscribe using Paypal',
-    description: 'Friends of Metal Magic Festival membership',
-    amount: '15',
-    currency: 'EUR'
+    buttonId: '86TE3AZW2HGB2'
+  },
+  paid: {
+    headline: '',
+    text: ''
+  },
+  cancelled: {
+    headline: '',
+    text: '',
+    tryagain: 'Try again'
   }
 };

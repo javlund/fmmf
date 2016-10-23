@@ -2,15 +2,14 @@ const path = require('path');
 const firebase = require('firebase');
 const express = require('express');
 const bodyParser = require('body-parser');
-const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
+const Facebook = require('./facebook');
 const jwt = require('json-web-token');
 const mail = require('./mail');
 const app = express();
 const jwtSecret = process.env.JWT_SECRET;
 const port = process.env.PORT || 2500;
 
-const acceptedEmails = ['jacob@avlund.dk'];
+const acceptedEmails = ['jacob@avlund.dk', 'jtroelsgaard@gmail.com'];
 
 firebase.initializeApp({
   serviceAccount: "firebase.json",
@@ -19,34 +18,22 @@ firebase.initializeApp({
 
 const db = firebase.database();
 
-passport.use(new FacebookStrategy({
-    clientID: '611519625696646',
-    clientSecret: '53f2e11ea0f516c10758de1b7257dc15',
-    callbackURL: 'http://localhost:2500/facebook-callback',
-    profileFields: ['id', 'displayName', 'email']
-  },
-  (accessToken, refreshToken, profile, done) => {
-    const email = profile.emails[0].value;
-    if(acceptedEmails.indexOf(email) === -1) {
-      done(null, false, {message: 'User is not permitted.'});
-      return;
-    }
-  }
-));
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
+const facebook = new Facebook(acceptedEmails, jwtSecret);
 
 const members = db.ref('members');
 
+function generateId() {
+  return Math.ceil((Math.random() * 9000000) + 1000000);
+}
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 app.use(express.static('.'));
 app.use(bodyParser.json());
-app.use(passport.initialize());
+app.use(facebook.getMiddleware());
 app.use('/private/*', (req, res, next) => {
   const token = req.query.token;
   if(!token) {
@@ -66,10 +53,6 @@ app.use('/private/*', (req, res, next) => {
     next();
   })
 });
-
-function generateId() {
-  return Math.ceil((Math.random() * 9000000) + 1000000);
-}
 
 app.get('/private/members', (req, res) => {
   members.once('value', snapshot => {
@@ -138,38 +121,18 @@ app.post('/member', (req, res) => {
     .then(() => {
       return mail.sendNewMemberMail(member);
     }).then(() => {
-      res.status(200).json({status: 'member created with id ' + id});
+      res.status(200).json({status: 'member created', id: id});
     }).catch(err => {
       console.log(err.message);
       res.status(500).json({status: 'Error: ' + err.message});
     });
 });
 
-app.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
+app.get('/facebook', facebook.getFacebook());
 
-app.get('/facebook-callback', (req, res, next) => {
-  passport.authenticate(
-    'facebook',
-    (err, user, info) => {
-      if(err) {
-        res.redirect('/error');
-        return;
-      }
-      const payload = {
-        id: user.id,
-        email: user.emails[0].value
-      };
-      jwt.encode(jwtSecret, payload, (jwtErr, token) => {
-        if(jwtErr) {
-          console.log(jwtErr);
-          res.end();
-          return;
-        }
-        res.redirect('/facebook.html?' + token);
-      });
-    }
-  )(req, res, next);
-});
+
+app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));

@@ -5,9 +5,11 @@ import Menu from './menu';
 import News from './news';
 import About from './about';
 import Membership from './membership';
+import Contact from './contact';
 import Admin from './admin';
 import Payment from './payment';
-import Contact from './contact';
+import Paid from './paid';
+import Cancelled from './cancelled';
 import danishIcon from '../../images/dk.png';
 import englishIcon from '../../images/uk.png';
 
@@ -35,7 +37,9 @@ class App extends React.Component {
       <Route path="/membership/:lang" component={Membership} />
       <Route path="/contact/:lang" component={Contact} />
       <Route path="/admin" component={Admin} />
-      <Route path="/payment/:id" component={Payment} />
+      <Route path="/payment/:id/:lang" component={Payment} />
+      <Route path="/paid/:lang" component={Paid} />
+      <Route path="/cancelled/:lang" component={Cancelled} />
       <IndexRoute component={News} />
     </Route>;
     this.router = (

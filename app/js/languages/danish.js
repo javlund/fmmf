@@ -44,8 +44,15 @@ export default {
     headline: 'betaling',
     text: 'Tak fordi du vil blive medlem! Medlemsskabet koster 200 kr. årligt og betales via Paypal. Tryk her for at komme videre til betalingen.',
     paypal: 'Tilmeld med Paypal',
-    description: 'Medlemskab af Friends of Metal Magic Festival',
-    amount: '200',
-    currency: 'DKK'
+    buttonId: 'YH98X2QRH9X4C'
+  },
+  paid: {
+    headline: '',
+    text: ''
+  },
+  cancelled: {
+    headline: '',
+    text: '',
+    tryagain: 'Prøv igen'
   }
 };

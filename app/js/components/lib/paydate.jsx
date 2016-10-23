@@ -17,7 +17,7 @@ const PayDate = props => {
 };
 
 PayDate.propTypes = {
-  date: React.PropTypes.object
+  date: React.PropTypes.string
 };
 
 export default PayDate;

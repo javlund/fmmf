@@ -3,6 +3,7 @@ import T from 'i18n-react';
 import 'whatwg-fetch';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
+import {browserHistory} from 'react-router';
 import moment from 'moment';
 import setLanguage from '../languages';
 import countries from '../data/countries.json';
@@ -189,6 +190,7 @@ class Signup extends React.Component {
   submit(event) {
     event.preventDefault();
     const {fields} = this.state;
+    const {lang} = this.props;
     fetch('/member', {
       method: 'POST',
       headers: {
@@ -199,11 +201,10 @@ class Signup extends React.Component {
       if(!response.ok) {
         throw Error(response.statusText);
       }
-      this.clearForm();
-      this.setState({
-        error: undefined,
-        message: T.translate('signup.success')
-      })
+      return response.json();
+    }).then(json => {
+      const id = json.id;
+      browserHistory.push(`/payment/${id}/${lang}`);
     }).catch(() => {
       this.setState({
         error: T.translate('signup.error'),
