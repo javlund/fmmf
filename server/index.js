@@ -33,7 +33,6 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(express.static('.'));
-app.use(bodyParser.json());
 app.use(facebook.getMiddleware());
 app.use('/private/*', (req, res, next) => {
   const token = req.query.token;
@@ -88,7 +87,7 @@ app.post('/private/members/:id/pay', (req, res) => {
   });
 });
 
-app.post('/private/members', (req, res) => {
+app.post('/private/members', bodyParser.json(), (req, res) => {
   const body = req.body;
   const dataAsArray = body.map(entry => {
     const id = generateId();
@@ -106,7 +105,7 @@ app.post('/private/members', (req, res) => {
   });
 });
 
-app.post('/member', (req, res) => {
+app.post('/member', bodyParser.json(), (req, res) => {
   const body = req.body;
   const id = generateId();
   const member = Object.assign({}, body, {
@@ -134,7 +133,7 @@ app.get('/facebook', facebook.getFacebook());
 
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
-app.post('/receive-ipn', paypal);
+app.post('/receive-ipn', bodyParser.text(), paypal);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));
