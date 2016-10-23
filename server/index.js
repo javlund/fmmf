@@ -3,6 +3,7 @@ const firebase = require('firebase');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Facebook = require('./facebook');
+const paypal = require('./paypal');
 const jwt = require('json-web-token');
 const mail = require('./mail');
 const app = express();
@@ -133,6 +134,7 @@ app.get('/facebook', facebook.getFacebook());
 
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
+app.get('/receive-ipn', paypal);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));
