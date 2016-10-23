@@ -1,7 +1,7 @@
 const ipn = require('paypal-ipn');
 
 function receiveIPNData(req, res) {
-  res.send(200);
+  res.sendStatus(200);
   ipn.verify(req.body, (err, message) => {
     if(err) {
       console.log(err);
