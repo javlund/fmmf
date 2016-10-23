@@ -38,8 +38,8 @@ class App extends React.Component {
       <Route path="/contact/:lang" component={Contact} />
       <Route path="/admin" component={Admin} />
       <Route path="/payment/:id/:lang" component={Payment} />
-      <Route path="/paid/:lang" component={Paid} />
-      <Route path="/cancelled/:lang" component={Cancelled} />
+      <Route path="/paid/:id/:lang" component={Paid} />
+      <Route path="/cancelled/:id/:lang" component={Cancelled} />
       <IndexRoute component={News} />
     </Route>;
     this.router = (

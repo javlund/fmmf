@@ -134,7 +134,7 @@ app.get('/facebook', facebook.getFacebook());
 
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
-app.get('/receive-ipn', paypal);
+app.post('/receive-ipn', paypal);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));

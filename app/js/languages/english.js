@@ -44,11 +44,12 @@ export default {
     headline: 'payment',
     text: 'Thank you for your support! The annual membership fee is €15 and is paid through Paypal. Click here to proceed to payment.',
     paypal: 'Subscribe using Paypal',
-    buttonId: '86TE3AZW2HGB2'
+    buttonId: '86TE3AZW2HGB2',
+    sandboxButtonId: '2NVBCW62SNJ48'
   },
   paid: {
-    headline: '',
-    text: ''
+    headline: 'Thank you',
+    text: 'The transaction has been completed, and you should have received an e-mail from Paypal. Once we have registered the payment, you will also receive a welcome e-mail from us.'
   },
   cancelled: {
     headline: '',
@@ -56,3 +57,4 @@ export default {
     tryagain: 'Try again'
   }
 };
+

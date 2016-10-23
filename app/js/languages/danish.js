@@ -44,11 +44,12 @@ export default {
     headline: 'betaling',
     text: 'Tak fordi du vil blive medlem! Medlemsskabet koster 200 kr. årligt og betales via Paypal. Tryk her for at komme videre til betalingen.',
     paypal: 'Tilmeld med Paypal',
-    buttonId: 'YH98X2QRH9X4C'
+    buttonId: 'YH98X2QRH9X4C',
+    sandboxButtonId: '5BUDQQA48JGJL'
   },
   paid: {
-    headline: '',
-    text: ''
+    headline: 'Mange tak',
+    text: 'Transaktionen er gennemført, og du skulle have fået en bekræftelsesmail fra Paypal. Så snart vi har registreret betalingen, modtager du også en velkomstmail fra os.'
   },
   cancelled: {
     headline: '',

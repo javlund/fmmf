@@ -1,10 +1,9 @@
 import React from 'react';
 import T from 'i18n-react';
-import {setLanguage} from '../languages';
+import setLanguage from '../languages';
 
 const Paid = props => {
-  const {lang} = props.params;
-  const memberId = props.query.member_id;
+  const {lang, id} = props.params;
   setLanguage(lang);
 
   return (
