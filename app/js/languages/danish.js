@@ -52,8 +52,8 @@ export default {
     text: 'Transaktionen er gennemført, og du skulle have fået en bekræftelsesmail fra Paypal. Så snart vi har registreret betalingen, modtager du også en velkomstmail fra os.'
   },
   cancelled: {
-    headline: '',
-    text: '',
+    headline: 'afbrudt',
+    text: 'Det ser ud til at du har afbrudt din betaling. HVis du har lyst til at prøve igen, så klik her!',
     tryagain: 'Prøv igen'
   }
 };

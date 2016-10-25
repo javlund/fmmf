@@ -2,7 +2,7 @@ const ipn = require('paypal-ipn');
 
 function receiveIPNData(req, res) {
   const body = req.body;
-  console.log(body);
+  console.log(req.headers);
   res.sendStatus(200);
   ipn.verify(body, {allow_sandbox: true}, (err, message) => {
     if(err) {

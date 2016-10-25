@@ -49,7 +49,7 @@ export default {
   },
   paid: {
     headline: 'Thank you',
-    text: 'The transaction has been completed, and you should have received an e-mail from Paypal. Once we have registered the payment, you will also receive a welcome e-mail from us.'
+    text: 'The transaction has been completed, and you should have received a confirmation e-mail from Paypal. Once we have registered the payment, you will also receive a welcome e-mail from us.'
   },
   cancelled: {
     headline: '',
