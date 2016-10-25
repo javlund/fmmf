@@ -133,7 +133,7 @@ app.get('/facebook', facebook.getFacebook());
 
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
-app.post('/receive-ipn', bodyParser.text(), paypal);
+app.post('/receive-ipn', bodyParser.urlencoded({extended: false}), paypal);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));
