@@ -1,7 +1,7 @@
 const path = require('path');
-const firebase = require('firebase');
 const express = require('express');
 const bodyParser = require('body-parser');
+const database = require('./database');
 const Facebook = require('./facebook');
 const paypal = require('./paypal');
 const jwt = require('json-web-token');
@@ -11,17 +11,17 @@ const jwtSecret = process.env.JWT_SECRET;
 const port = process.env.PORT || 2500;
 
 const acceptedEmails = ['jacob@avlund.dk', 'jtroelsgaard@gmail.com'];
-
-firebase.initializeApp({
-  serviceAccount: "firebase.json",
-  databaseURL: "https://fmmf-d2d95.firebaseio.com"
-});
-
-const db = firebase.database();
-
 const facebook = new Facebook(acceptedEmails, jwtSecret);
+const members = database.members;
 
-const members = db.ref('members');
+const ioServer = require('http').Server(app);
+const io = require('socket.io')(ioServer);
+
+function updateStatus(status) {
+  io.on('connection', socket => {
+    socket.emit('statusChange', status);
+  });
+}
 
 function generateId() {
   return Math.ceil((Math.random() * 9000000) + 1000000);
@@ -133,7 +133,7 @@ app.get('/facebook', facebook.getFacebook());
 
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
-app.post('/receive-ipn', bodyParser.urlencoded({extended: false}), paypal);
+app.post('/receive-ipn', bodyParser.urlencoded({extended: false}), paypal(updateStatus));
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));

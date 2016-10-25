@@ -45,6 +45,8 @@
     "redux-thunk": "^2.1.0",
     "sendgrid": "^4.3.0",
     "shortid": "^2.2.6",
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
