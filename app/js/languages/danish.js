@@ -49,7 +49,10 @@ export default {
   },
   paid: {
     headline: 'Mange tak',
-    text: 'Transaktionen er gennemført, og du skulle have fået en bekræftelsesmail fra Paypal. Så snart vi har registreret betalingen, modtager du også en velkomstmail fra os.'
+    text: 'Transaktionen er gennemført, og du skulle have fået en bekræftelsesmail fra Paypal. Så snart vi har registreret betalingen, modtager du også en velkomstmail fra os.',
+    status: 'Din betaling',
+    awaiting: 'afventer bekræftelse...',
+    completed: 'er modtaget!'
   },
   cancelled: {
     headline: 'afbrudt',

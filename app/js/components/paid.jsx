@@ -1,31 +1,29 @@
 import React from 'react';
 import T from 'i18n-react';
-import io from 'socket.io-client';
+import database from '../data/database';
 import setLanguage from '../languages';
-
-const socket = io('http://localhost');
 
 class Paid extends React.Component {
   constructor() {
     super();
     this.state = {
-      status: 'Awaiting'
+      status: 'awaiting'
     };
   }
   
   componentDidMount() {
     const {id} = this.props.params;
-    socket.on('statusChange', data => {
-      if(data.id === id) {
+    database.ref(`members/${id}`).on('value', snapshot => {
+      if(snapshot.val().lastpaid) {
         this.setState({
-          status: data.status
+          status: 'completed'
         });
       }
-    })
+    });
   }
 
   render() {
-    const {status} = this.state.status;
+    const {status} = this.state;
     const {lang} = this.props.params;
     setLanguage(lang);
 
@@ -33,7 +31,7 @@ class Paid extends React.Component {
       <div>
         <h1 className="headline"><T.text text="paid.headline" /></h1>
         <p><T.text text="paid.text" /></p>
-        <p><T.text text="paid.status" /> {status}</p>
+        <p><T.text text="paid.status" /> <T.text text={`paid.${status}`} /></p>
       </div>
     );
   }
