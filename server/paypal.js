@@ -12,6 +12,7 @@ function receiveIPNData(req, res) {
       return;
     }
     console.log(message);
+    console.log(body);
     if(body.payment_status === 'Completed') {
       const id = body.custom;
       const now =  new Date().getTime();
