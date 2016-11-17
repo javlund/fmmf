@@ -3,3 +3,4 @@ build
 vendor
 .idea
 npm-debug.log
+.vscode

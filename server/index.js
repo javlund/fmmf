@@ -115,7 +115,7 @@ app.post('/member', bodyParser.json(), (req, res) => {
     }).then(() => {
       res.status(200).json({status: 'member created', id: id});
     }).catch(err => {
-      log.warn(err.message);
+      log.warn(err.response);
       res.status(500).json({status: 'Error: ' + err.message});
     });
 });

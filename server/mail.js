@@ -32,7 +32,7 @@ function sendNewMemberMail(member) {
   personalization.addSubstitution(new helper.Substitution('-address-', member.address));
   personalization.addSubstitution(new helper.Substitution('-city-', member.city));
   personalization.addSubstitution(new helper.Substitution('-zip-', member.zip));
-  personalization.addSubstitution(new helper.Substitution('-country-', member.country));
+  personalization.addSubstitution(new helper.Substitution('-country-', member.country.label));
   mail.setTemplateId('87bd7cfe-1e30-4a85-85a7-3d5ac7a30873');
 
   return createMailPromise(mail);

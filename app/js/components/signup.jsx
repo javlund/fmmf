@@ -105,7 +105,7 @@ class Signup extends React.Component {
           <div className="form-group">
             <label htmlFor="country" className="col-md-3 control-label"><T.text text="signup.country" /></label>
             <div className="col-md-9">
-              <Select id="country" name="country" options={countryOptions} value={fields.country} onChange={this.changeCountry} ref="country" placeholder={selectPlaceholderText} />
+              <Select id="country" name="country" options={countryOptions} value={fields.country} onChange={this.changeCountry} ref="country" menuContainerStyle={{zIndex: 500}} placeholder={selectPlaceholderText} />
             </div>
           </div>
           <div className="form-group">
