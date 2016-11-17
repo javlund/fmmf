@@ -1,5 +1,7 @@
 const ipn = require('paypal-ipn');
+const log = require('./log');
 const database = require('./database');
+const mail = require('./mail');
 
 const members = database.members;
 
@@ -8,20 +10,23 @@ function receiveIPNData(req, res) {
   res.sendStatus(200);
   ipn.verify(body, {allow_sandbox: true}, (err, message) => {
     if(err) {
-      console.log(err);
+      log.warn(err);
       return;
     }
-    console.log(message);
-    console.log(body);
+    log.info(message);
     if(body.payment_status === 'Completed') {
       const id = body.custom;
       const now =  new Date().getTime();
-      console.log(`Payment for member ${id} was completed.`);
+      log.info(`Payment for member ${id} was completed.`);
       members.child(id).update({lastpaid: now}, err => {
         if(err) {
-          console.log(`Could not update member ${id} with lastpaid set to ${now}, error is: ` + err);
+          log.warn(`Could not update member ${id} with lastpaid set to ${now}, error is: ` + err);
           return;
         }
+        members.child(id).once(snapshot => {
+          const member = snapshot.val();
+          mail.sendMembershipConfirmationMail(member);
+        });
       });
 
     }

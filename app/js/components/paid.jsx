@@ -13,13 +13,14 @@ class Paid extends React.Component {
   
   componentDidMount() {
     const {id} = this.props.params;
-    database.ref(`members/${id}`).on('value', snapshot => {
-      if(snapshot.val().lastpaid) {
-        this.setState({
-          status: 'completed'
-        });
-      }
-    });
+    database.ref(`members/${id}/lastpaid`).once('value')
+      .then(snapshot => {
+        if(snapshot.val()) {
+          this.setState({
+            status: 'completed'
+          });
+        }
+      });
   }
 
   render() {

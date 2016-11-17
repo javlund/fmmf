@@ -1,10 +1,11 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const jwt = require('json-web-token');
+const log = require('./log');
 const database = require('./database');
 const Facebook = require('./facebook');
 const paypal = require('./paypal');
-const jwt = require('json-web-token');
 const mail = require('./mail');
 const app = express();
 const jwtSecret = process.env.JWT_SECRET;
@@ -19,7 +20,7 @@ function generateId() {
 }
 
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
+  log.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
@@ -114,13 +115,12 @@ app.post('/member', bodyParser.json(), (req, res) => {
     }).then(() => {
       res.status(200).json({status: 'member created', id: id});
     }).catch(err => {
-      console.log(err.message);
+      log.warn(err.message);
       res.status(500).json({status: 'Error: ' + err.message});
     });
 });
 
 app.get('/facebook', facebook.getFacebook());
-
 
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
@@ -131,5 +131,5 @@ app.get('*', (req, res) => {
 });
   
 app.listen(port, () => {
-  console.log('Listening on port ' + port);
+  log.info('Listening on port ' + port);
 });

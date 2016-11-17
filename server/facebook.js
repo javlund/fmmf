@@ -1,6 +1,7 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const jwt = require('json-web-token');
+const log = require('./log');
 
 class Facebook {
   constructor(acceptedEmails, jwtSecret) {
@@ -43,9 +44,9 @@ class Facebook {
     const jwtSecret = this.jwtSecret;
     passport.authenticate(
       'facebook',
-      (err, user, info) => {
+      (err, user) => {
         if(err) {
-          console.log(err);
+          log.warn(err);
           res.redirect('/error');
           return;
         }
@@ -55,7 +56,7 @@ class Facebook {
         };
         jwt.encode(jwtSecret, payload, (jwtErr, token) => {
           if(jwtErr) {
-            console.log(jwtErr);
+            log.warn(jwtErr);
             res.end();
             return;
           }
