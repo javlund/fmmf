@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const Promise = require('bluebird');
 const jwt = require('json-web-token');
 const log = require('./log');
 const database = require('./database');
@@ -94,6 +95,40 @@ app.post('/private/members', bodyParser.json(), (req, res) => {
   }, {});
   members.set(dataAsObject, () => {
     res.status(200).json({status: dataAsArray.length + ' members written.'});
+  });
+});
+
+app.post('/private/members/sendmail', (req, res) => {
+  members.once('value', snapshot => {
+    const allMembers = snapshot.val();
+    const promises = Object.keys(allMembers)
+      .filter(key => {
+        return !allMembers[key].mailSent
+      })
+      .map(key => {
+        const member = allMembers[key];
+        return mail.sendExistingMembersMail(member).reflect();
+      });
+    let errors;
+    Promise
+      .all(promises)
+      .each(inspection => {
+        if(inspection.isFulfilled()) {
+          const value = inspection.value();
+          const member = value.member;
+          members.child(member.id).update({mailSent: true});
+        } else {
+          errors++;
+        }
+      })
+      .then(() => {
+        if(errors) {
+          log.warn(errors + ' errors encountered when sending out mails.');
+          res.status(500).json({members: promises.length, errors: errors});
+          return;
+        }
+        res.status(200).json({status: 'ok', members: promises.length});
+      })
   });
 });
 

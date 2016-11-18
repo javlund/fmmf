@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import FixedDataTable from 'fixed-data-table';
-import {TextCell, AddressCell, PaidCell, ApprovedCell, MoreCell} from './lib/cells';
+import {TextCell, AddressCell, CountryCell, PaidCell, MoreCell} from './lib/cells';
 import PayDate from './lib/paydate';
 import {login, getToken, setAdminPage} from '../actions/auth';
 import {loadMembers, approve, pay} from '../actions/members';
@@ -139,17 +139,12 @@ class Admin extends React.Component {
           <Column
             header={<Cell className="admin-table-header">Land</Cell>}
             width={100}
-            cell={<TextCell data={members} col="country" />}
+            cell={<CountryCell data={members} />}
           />
           <Column
             header={<Cell className="admin-table-header">Betalt</Cell>}
             width={60}
             cell={<PaidCell data={members} />}
-          />
-          <Column
-            header={<Cell className="admin-table-header">Godkendt</Cell>}
-            width={80}
-            cell={<ApprovedCell data={members} approve={approve.bind(undefined, token)} />}
           />
           <Column
             header={<Cell className="admin-table-header">Mere</Cell>}
@@ -167,7 +162,7 @@ class Admin extends React.Component {
             <a href="mailto:{member.email}">{member.email}</a><br />
             {member.address}<br />
             {member.zip} {member.city}<br />
-            {member.country}<br />
+            {member.country.label}<br />
             Godkendt: {
               member.approved ?
                 <span style={{color: '#00ff00'}}>{moment(member.approved).format(DATE_FORMAT)}</span> :

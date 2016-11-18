@@ -39,15 +39,33 @@ function sendNewMemberMail(member) {
 }
 
 function sendMembershipConfirmationMail(member) {
-  const subject = '';
+  const danish = member.country.value === 'DK'
+  const subject = danish ? 'Dit medlemskab er nu bekræftet' : 'Your membership is now confirmed';
   const mail = createBasicMail(member, subject);
-  const templateId = member.country === 'DK' ? '441d695e-d145-40c5-82f8-1e00975f6ec1' : '4d2fe39e-82d7-427c-b1d8-3df0fe20c434';
+  const templateId = danish ? '441d695e-d145-40c5-82f8-1e00975f6ec1' : '4d2fe39e-82d7-427c-b1d8-3df0fe20c434';
   mail.setTemplateId(templateId);
 
   return createMailPromise(mail);
 }
 
+function sendExistingMembersMail(member) {
+  const danish = member.country.value === 'DK';
+  const subject = danish ? 'Tak for din støtte!' : 'Thank you for your support!';
+  const mail = createBasicMail(member, subject);
+
+  const personalization = mail.personalizations[0];
+  personalization.addSubstitution(new helper.Substitution('-id-', member.id.toString()));
+  personalization.addSubstitution(new helper.Substitution('-lang-', danish ? 'da' : 'en'));
+  const templateId = danish ? '2349bf55-bd85-43a3-8ffc-3e689ac18b5c' : '1fc0762e-1a50-4bd9-8ee0-a61a9348c51e';
+  mail.setTemplateId(templateId);
+
+  return createMailPromise(mail).then(result => {
+    return {result: result, member: member};
+  });
+}
+
 module.exports = {
   sendNewMemberMail,
-  sendMembershipConfirmationMail
+  sendMembershipConfirmationMail,
+  sendExistingMembersMail
 };

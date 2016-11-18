@@ -43,6 +43,7 @@
     "react-router": "^2.5.2",
     "react-select": "^1.0.0-rc.2",
     "redux": "^3.5.2",
+    "redux-devtools-extension": "^1.0.0",
     "redux-thunk": "^2.1.0",
     "sendgrid": "^4.3.0",
     "shortid": "^2.2.6",

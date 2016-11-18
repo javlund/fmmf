@@ -13,18 +13,21 @@ import 'react-select/dist/react-select.css';
 
 const endDate = moment();
 
-function getCountryOptions(lang) {
+function extractCountry(lang, country) {
   const selector = `${lang}Name`;
-  return countries.map(country => {
-    const intName = country[selector];
-    const nativeName = country.nativeName;
-    const label = intName === nativeName ? intName : `${intName} (${nativeName})`;
-    const value = country.code;
-    return {
-      label,
-      value
-    };
-  });
+  const intName = country[selector];
+  const nativeName = country.nativeName;
+  const label = intName === nativeName ? intName : `${intName} (${nativeName})`;
+  const value = country.code;
+  return {
+    label,
+    value
+  };
+}
+
+function getCountryOptions(lang) {
+  const extractor = extractCountry.bind(undefined, lang);
+  return countries.map(extractor);
 }
 
 function validateField(key, value) {
@@ -41,6 +44,8 @@ function validateEmail(value) {
 class Signup extends React.Component {
   constructor(props) {
     super(props);
+    const rawDenmark = countries.find(country => country.code === 'DK');
+    const denmark = extractCountry(props.lang, rawDenmark);
     this.state = {
       fields: {
         name: '',
@@ -49,7 +54,7 @@ class Signup extends React.Component {
         city: '',
         zip: '',
         birthdate: moment(),
-        country: 'DK'
+        country: denmark
       }
     };
     this.changeValue = this.changeValue.bind(this);

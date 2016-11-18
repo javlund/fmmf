@@ -33,6 +33,19 @@ AddressCell.propTypes = {
   data: React.PropTypes.array  
 };
 
+const CountryCell = ({rowIndex, data, ...props}) => {
+  const country = data[rowIndex].country;
+  return (
+    <Cell {...props}>
+      {country.label}
+    </Cell>
+  )
+};
+
+CountryCell.propTypes = {
+  rowIndex: React.PropTypes.number,
+  data: React.PropTypes.array  
+};
 
 const PaidCell = ({rowIndex, data, ...props}) => {
   const lastPaid = data[rowIndex].lastpaid;
@@ -90,6 +103,7 @@ MoreCell.propTypes = {
 export {
   TextCell,
   AddressCell,
+  CountryCell,
   PaidCell,
   ApprovedCell,
   MoreCell
