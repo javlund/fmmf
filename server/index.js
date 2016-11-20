@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Promise = require('bluebird');
 const jwt = require('json-web-token');
+const helmet = require('helmet');
 const log = require('./log');
 const database = require('./database');
 const Facebook = require('./facebook');
@@ -20,11 +21,21 @@ function generateId() {
   return Math.ceil((Math.random() * 9000000) + 1000000);
 }
 
+function getCountry(danishName) {
+  const countries = require('../app/js/data/countries');
+  const foundCountry = countries.find(country => country.daName === danishName);
+  return {
+    value: foundCountry.code,
+    label: danishName
+  };
+}
+
 app.use(function(err, req, res, next) {
   log.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
+app.use(helmet());
 app.use(express.static('.'));
 app.use(facebook.getMiddleware());
 app.use('/private/*', (req, res, next) => {
@@ -86,7 +97,8 @@ app.post('/private/members', bodyParser.json(), (req, res) => {
     const id = generateId();
     delete entry.ID;
     return Object.assign({}, entry, {
-      id
+      id,
+      country: getCountry(entry.country.trim())
     });
   });
   const dataAsObject = dataAsArray.reduce((obj, current) => {
