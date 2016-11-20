@@ -24,10 +24,13 @@ function receiveIPNData(req, res) {
           log.warn(`Could not update member ${id} with lastpaid set to ${now}, error is: ` + err);
           return;
         }
-        members.child(id).once(snapshot => {
-          const member = snapshot.val();
-          mail.sendMembershipConfirmationMail(member);
-        });
+        members
+          .child(id)
+          .once('value')
+          .then(snapshot => {
+            const member = snapshot.val();
+            mail.sendMembershipConfirmationMail(member);
+          });
       });
     } else {
       log.warn('Membership status was NOT completed.');
