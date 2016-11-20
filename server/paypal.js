@@ -14,6 +14,7 @@ function receiveIPNData(req, res) {
       return;
     }
     log.info(message);
+    log.info(body);
     if(body.payment_status === 'Completed') {
       const id = body.custom;
       const now =  new Date().getTime();
@@ -28,7 +29,8 @@ function receiveIPNData(req, res) {
           mail.sendMembershipConfirmationMail(member);
         });
       });
-
+    } else {
+      log.warn('Membership status was NOT completed.');
     }
   })
 }
