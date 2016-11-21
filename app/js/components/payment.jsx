@@ -13,7 +13,7 @@ class Payment extends React.Component {
 
   render() {
     const {id, lang} = this.props.params;
-    const {loading, baseUrl, daButton, enButton} = this.props;
+    const {loading, baseUrl, debug, daButton, enButton} = this.props;
     if(loading) {
       return (
         <div>
@@ -25,12 +25,13 @@ class Payment extends React.Component {
     const buttonId = lang === 'da' ? daButton : enButton;
     const returnUrl = `${baseUrl}/paid/${id}/${lang}`;
     const cancelUrl = `${baseUrl}/cancelled/${id}/${lang}`;
+    const paypalBaseUrl = debug ? 'https://www.sandbox.paypal.com' : 'https://www.paypal.com';
     return (
       <div>
         <h1 className="headline"><T.text text="payment.headline" /></h1>
         <p><T.text text="payment.text" /></p>
         <div>
-          <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <form action={`${paypalBaseUrl}/cgi-bin/webscr`} method="post" target="_top">
             <input type="hidden" name="cmd" value="_s-xclick" />
             <input type="hidden" name="return" value={returnUrl}/>
             <input type="hidden" name="cancel_return" value={cancelUrl}/>
@@ -51,6 +52,7 @@ Payment.propTypes = {
   }),
   loadPaypalConfig: React.PropTypes.func,
   loading: React.PropTypes.bool,
+  debug: React.PropTypes.bool,
   baseUrl: React.PropTypes.string,
   daButton: React.PropTypes.string,
   enButton: React.PropTypes.string
