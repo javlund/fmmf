@@ -9,13 +9,18 @@ const database = require('./database');
 const Facebook = require('./facebook');
 const paypal = require('./paypal');
 const mail = require('./mail');
+
 const app = express();
+
 const jwtSecret = process.env.JWT_SECRET;
 const port = process.env.PORT || 2500;
+const paypalDebug = process.env.PAYPAL_SANDBOX === 'true';
+const environment = process.env.NODE_ENVIRONMENT;
 
 const acceptedEmails = ['jacob@avlund.dk', 'jtroelsgaard@gmail.com'];
 const facebook = new Facebook(acceptedEmails, jwtSecret);
 const members = database.members;
+const baseUrl = environment === 'heroku' ? 'https://www.fmmf.dk' : 'http://localhost:' + port; 
 
 function generateId() {
   return Math.ceil((Math.random() * 9000000) + 1000000);
@@ -150,6 +155,7 @@ app.post('/member', bodyParser.json(), (req, res) => {
   const member = Object.assign({}, body, {
     id,
     created: new Date().getTime(),
+    mailSent: true,
     lastpaid: 0,
     modified: 0,
     deleted: 0
@@ -172,6 +178,19 @@ app.get('/facebook', facebook.getFacebook());
 app.get('/facebook-callback', facebook.getFacebookCallback.bind(facebook));
 
 app.post('/receive-ipn', bodyParser.urlencoded({extended: false}), paypal);
+
+app.get('/paypal-config', (req, res) => {
+  const daButton = paypalDebug ? '5BUDQQA48JGJL' : 'YH98X2QRH9X4C';
+  const enButton = paypalDebug ? '2NVBCW62SNJ48' : '86TE3AZW2HGB2';
+  
+  const paypalData = {
+    debug: paypalDebug,
+    baseUrl,
+    daButton,
+    enButton
+  };
+  res.status(200).send(paypalData);
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));

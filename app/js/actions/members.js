@@ -15,7 +15,6 @@ function loadMembers(token) {
         dispatch({type: 'members.loaded', members: response});
       })
       .catch(err => {
-        console.log(err);
         dispatch({type: 'members.error', error: err});
       });
   };
