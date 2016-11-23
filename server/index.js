@@ -18,7 +18,7 @@ const paypalDebug = process.env.PAYPAL_SANDBOX === 'true';
 const environment = process.env.NODE_ENVIRONMENT;
 
 const acceptedEmails = ['jacob@avlund.dk', 'jtroelsgaard@gmail.com'];
-const baseUrl = environment === 'heroku' ? 'https://www.fmmf.dk' : 'http://localhost:' + port; 
+const baseUrl = environment === 'heroku' ? 'http://www.fmmf.dk' : 'http://localhost:' + port; 
 const facebook = new Facebook(acceptedEmails, jwtSecret, baseUrl);
 const members = database.members;
 
