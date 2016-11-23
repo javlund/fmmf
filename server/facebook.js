@@ -4,11 +4,11 @@ const jwt = require('json-web-token');
 const log = require('./log');
 
 class Facebook {
-  constructor(acceptedEmails, jwtSecret) {
+  constructor(acceptedEmails, jwtSecret, baseUrl) {
     passport.use(new FacebookStrategy({
         clientID: '611519625696646',
         clientSecret: '53f2e11ea0f516c10758de1b7257dc15',
-        callbackURL: 'http://localhost:2500/facebook-callback',
+        callbackURL: `${baseUrl}/facebook-callback`,
         profileFields: ['id', 'displayName', 'email']
       },
       (accessToken, refreshToken, profile, done) => {

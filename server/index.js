@@ -18,9 +18,9 @@ const paypalDebug = process.env.PAYPAL_SANDBOX === 'true';
 const environment = process.env.NODE_ENVIRONMENT;
 
 const acceptedEmails = ['jacob@avlund.dk', 'jtroelsgaard@gmail.com'];
-const facebook = new Facebook(acceptedEmails, jwtSecret);
-const members = database.members;
 const baseUrl = environment === 'heroku' ? 'https://www.fmmf.dk' : 'http://localhost:' + port; 
+const facebook = new Facebook(acceptedEmails, jwtSecret, baseUrl);
+const members = database.members;
 
 function generateId() {
   return Math.ceil((Math.random() * 9000000) + 1000000);
@@ -66,6 +66,10 @@ app.use('/private/*', (req, res, next) => {
 app.get('/private/members', (req, res) => {
   members.once('value', snapshot => {
     const result = snapshot.val();
+    if(!result) {
+      res.status(200).json([]);
+      return;
+    }
     const resultAsArray = Object.keys(result).map(key => result[key]);
     const filteredResult = resultAsArray.filter(entry => entry.deleted === 0);
     res.status(200).json(filteredResult);
