@@ -42,6 +42,9 @@ function sendMembershipConfirmationMail(member) {
   const danish = member.country.value === 'DK'
   const subject = danish ? 'Dit medlemskab er nu bekræftet' : 'Your membership is now confirmed';
   const mail = createBasicMail(member, subject);
+
+  const personalization = mail.personalizations[0];
+  personalization.addSubstitution(new helper.Substitution('-id-', member.id));
   const templateId = danish ? '441d695e-d145-40c5-82f8-1e00975f6ec1' : '4d2fe39e-82d7-427c-b1d8-3df0fe20c434';
   mail.setTemplateId(templateId);
 
