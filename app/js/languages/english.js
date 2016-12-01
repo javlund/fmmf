@@ -42,7 +42,9 @@ export default {
   },
   payment: {
     headline: 'payment',
-    text: 'Thank you for your support! The annual membership fee is €15 and is paid through Paypal. Click here to proceed to payment.',
+    text: 'Thank you for your support! The annual membership fee is €15 and is paid through Paypal.',
+    terms: 'When you register you are accepting a subscription, which means you will automatically be charged for your membership fee once a year, unless you actively unsubscribe. One month in advance you will receive an email notification reminding you of the upcomming transaction, for you to unsubscribe should you no longer wish to support FMMF.',
+    accept: 'OK, I understand that',
     paypal: 'Subscribe using Paypal',
     buttonId: '86TE3AZW2HGB2',
     sandboxButtonId: '2NVBCW62SNJ48'

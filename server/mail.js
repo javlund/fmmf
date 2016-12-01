@@ -3,7 +3,7 @@ const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
 function createBasicMail(member, subject) {
-  const sender = new helper.Email('jtroelsgaard@gmail.com', 'Friends of Metal Magic');
+  const sender = new helper.Email('friendsofmetalmagic@gmail.com', 'Friends of Metal Magic');
   const receiver = new helper.Email(member.email, member.name);
   const content = new helper.Content('text/html', 'placeholder');
 

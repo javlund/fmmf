@@ -42,7 +42,9 @@ export default {
   },
   payment: {
     headline: 'betaling',
-    text: 'Tak fordi du vil blive medlem! Medlemsskabet koster 200 kr. årligt og betales via Paypal. Tryk her for at komme videre til betalingen.',
+    text: 'Tak fordi du vil blive medlem! Medlemsskabet koster 200 kr. årligt og betales via Paypal.',
+    terms: 'Med din indmeldelse accepterer du, at vi melder dig til en abonnementservice, hvor vi automatisk trækker dit årskontingent én gang om året, med mindre du aktivt melder det fra. Du vil modtage en email notifikation en måned før, vi trækker dit kontingent, så du har mulighed for at melde  det fra, såfremt du ikke længere ønsker at støtte foreningen FMMF.',
+    accept: 'OK, det har jeg forstået',
     paypal: 'Tilmeld med Paypal',
     buttonId: 'YH98X2QRH9X4C',
     sandboxButtonId: '5BUDQQA48JGJL'
