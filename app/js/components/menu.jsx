@@ -20,7 +20,11 @@ class Menu extends React.Component {
           <li><NavLink to={"/contact/" + lang} className="menu-text"><T.text text={{key: 'contact.headline'}} /></NavLink></li>
         </ul>
         <div className="content">
-        {this.props.children}
+          <div className="row">
+            <div className="col-md-12">
+              {this.props.children}
+            </div>
+          </div>
         </div>
         <AdminLink />
       </div>

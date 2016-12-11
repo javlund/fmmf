@@ -30,6 +30,9 @@ function receiveIPNData(req, res) {
           .then(snapshot => {
             const member = snapshot.val();
             mail.sendMembershipConfirmationMail(member);
+          })
+          .catch(err => {
+            log.warn(`Could not send membership confirmation mail, error is: ${err}`);
           });
       });
     } else {

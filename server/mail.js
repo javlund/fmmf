@@ -44,7 +44,7 @@ function sendMembershipConfirmationMail(member) {
   const mail = createBasicMail(member, subject);
 
   const personalization = mail.personalizations[0];
-  personalization.addSubstitution(new helper.Substitution('-id-', member.id));
+  personalization.addSubstitution(new helper.Substitution('-id-', member.id.toString()));
   const templateId = danish ? '441d695e-d145-40c5-82f8-1e00975f6ec1' : '4d2fe39e-82d7-427c-b1d8-3df0fe20c434';
   mail.setTemplateId(templateId);
 
