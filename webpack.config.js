@@ -57,7 +57,7 @@ const common = {
       {
         test: /\.docx?$/,
         loader: 'file-loader?mimetype=application/msword'
-      }
+      },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
         loader: 'url?limit=10000&mimetype=application/font-woff'
