@@ -9,17 +9,30 @@ body {
   body {
     background-image: url('../images/background_1200.jpg');
   }
+
+  .fmmf-menu {
+      margin-top: 300px;
+  }
 }
 
 @media only screen and (min-width: 1600px) {
   body {
     background-image: url('../images/background_1600.jpg');
   }
+
+  .fmmf-menu {
+      margin-top: 300px;
+  }
 }
 
-@media only handheld and (max-width: 800px) {
+@media (max-width: 800px) {
   body {
     background-image: url('../images/background_800.jpg');
+    background-size: 100%;
+  }
+
+  .fmmf-menu {
+      margin-top: 150px;
   }
 }
 
@@ -60,29 +73,33 @@ body {
 }
 
 .fmmf-menu {
-  margin-top: 300px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.fmmf-menu ul {
+.fmmf-menu > ul {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
 }
 
-.fmmf-menu li {
+.fmmf-menu > ul > li {
   text-align: center;
 }
 
 .languages {
-  float: right;
+  position: absolute;
+  top: 10vh;
+  right: 1vw;
+  list-style-type: none;
 }
 
-.languages > a > img {
-  width: 64px;
-  height: 64px;
+.languages > li> a > img {
+  width: 10vw;
+  height: 10vw;
+  max-width: 64px;
+  max-height: 64px;
 }
 
 h1.headline {

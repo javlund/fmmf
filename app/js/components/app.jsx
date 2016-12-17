@@ -33,7 +33,7 @@ class App extends React.Component {
     this.getLanguage = this.getLanguage.bind(this);
     const routes = <Route path="/" component={Menu} getLanguage={this.getLanguage}>
       <Route path="/news/:lang" component={News} />
-      <Route path="/about/:lang" component={About} />
+      <Route path="/about(/:thanks)/:lang" component={About} />
       <Route path="/membership/:lang" component={Membership} />
       <Route path="/contact/:lang" component={Contact} />
       <Route path="/admin" component={Admin} />
@@ -58,10 +58,10 @@ class App extends React.Component {
     return (
       <div className="container">
         {!isAdminPage && (
-          <div className="languages">
-            <a href="#" onClick={this.toDanish.bind(this)}><img src={danishIcon} /></a>
-            <a href="#" onClick={this.toEnglish.bind(this)}><img src={englishIcon} /></a>
-          </div>
+          <ul className="languages">
+            <li><a href="#" onClick={this.toDanish.bind(this)}><img src={danishIcon} /></a></li>
+            <li><a href="#" onClick={this.toEnglish.bind(this)}><img src={englishIcon} /></a></li>
+          </ul>
         )}
         {this.router}
       </div>

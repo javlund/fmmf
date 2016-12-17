@@ -5,7 +5,14 @@ export default {
 
           This means that when you become a member of the organization, you are part of the efforts to ensure that the festival survives, grows and keeps attracting big and exclusive acts.
 
-          Funds from membership fees and other sources of income are channelled directly to the festival, once the organization's expenses have been covered. We strive to keep our expenses to a minimum - in this way, the largest possible amount of funds received from you members are used directly to support the Metal Magic Festival.`
+          Funds from membership fees and other sources of income are channelled directly to the festival, once the organization's expenses have been covered. We strive to keep our expenses to a minimum - in this way, the largest possible amount of funds received from you members are used directly to support the Metal Magic Festival.`,
+    documents: 'You can find our statutes of association and minutes here:',
+    statutes: 'Statutes of association',
+    minutes: 'Minutes of the founding general meeting',
+    donate: 'If you would like to support the organization, you can donate by pressing this button:',
+    donateButton: 'Donate',
+    membership: 'Alternatively, you can become a member by clicking here.',
+    thanks: 'Thank you very much for your contribution, we appreciate it a lot!'
   },
   membership: {
     headline: 'membership',
@@ -25,7 +32,9 @@ export default {
   },
   news: {
     headline: 'news',
-    text: `We, the Metal Magic Crew would like to thank YOU for helping make this dream of ours come true! Without your support, we couldn’t have done this during the last 9 years! Especially we would like to thank the venue-staff of Ungdommens Hus, who always worked hard to help us, our devoted and countless volunteers who always run the extra mile if necessary, the many bands who did some amazing performances and acted like absolute gentlemen/women, and last but not least our beloved guests, who showed us massive support during the years and helped to create that unique atmosphere we are so proud of. THANKS A BUNCH!!! But now to the sad part… Due to some unforeseen circumstances and without us being able to do much about it, we can no longer have the festival at the venue we all learned to love… We don’t blame anyone and see this only as an opportunity to try to stand on our own feet, and not be depending on a venue-economy. So Metal Magic 9 will be the last festival on this location. But YES we have some plans to start MMF from scratch again on a new location, and we are already working hard on making it happen from 2017. BUT it will take some time to get it up on the same levels as now, and we are depending on your continuous support so that we can ‘make MMF great again’. We will ASAP let you know more of our plans for the future when we have it! So please ENJOY the years fest at its fullest and leave with a certainty that there will definitely be a RESURRECTION next year where METAL MAGIC ZERO will take place!`
+    text: `Finally we are ready to accept members!
+
+        Metal Magic Festival needs the support from every fan of the festival. It's a hard job to start again from scratch.`
   },
   signup: {
     name: 'Name',

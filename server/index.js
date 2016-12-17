@@ -101,7 +101,7 @@ app.post('/private/members/:id/pay', (req, res) => {
 });
 
 app.post('/private/members', bodyParser.json(), (req, res) => {
-  const body = req.body;
+  /*const body = req.body;
   const dataAsArray = body.map(entry => {
     const id = generateId();
     delete entry.ID;
@@ -116,7 +116,8 @@ app.post('/private/members', bodyParser.json(), (req, res) => {
   }, {});
   members.set(dataAsObject, () => {
     res.status(200).json({status: dataAsArray.length + ' members written.'});
-  });
+  });*/
+  res.status(200).json({status: 'This endpoint is currently unavailable.'});
 });
 
 app.post('/private/members/sendmail', (req, res) => {
@@ -186,12 +187,16 @@ app.post('/receive-ipn', bodyParser.urlencoded({extended: false}), paypal);
 app.get('/paypal-config', (req, res) => {
   const daButton = paypalDebug ? '5BUDQQA48JGJL' : 'YH98X2QRH9X4C';
   const enButton = paypalDebug ? '2NVBCW62SNJ48' : '86TE3AZW2HGB2';
+  const daDonateButton = 'CZKWKFEHWPWPA';
+  const enDonateButton = 'QC24D5UNWMMKL';
   
   const paypalData = {
     debug: paypalDebug,
     baseUrl,
     daButton,
-    enButton
+    enButton,
+    daDonateButton,
+    enDonateButton
   };
   res.status(200).send(paypalData);
 });
