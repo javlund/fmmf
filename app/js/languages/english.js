@@ -22,7 +22,7 @@ export default {
 
           The competitions will be automatic draws amongst all our active members and thus requires no action whatsoever on your part in order to receive the great prizes.
 
-          Membership costs €15 per year.
+          Membership costs 200 DKK (equivalent to €27) per year.
 
           Sign up here:`
   },
